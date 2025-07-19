@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kejutan Spesial untuk Farisa Azzahra</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+    <audio id="music" src="Party.mp3" loop></audio>
+
+    <main id="content-container"></main>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="script.js"></script>
+
+    <script>
+        const audio = document.getElementById('music');
+        const contentContainer = document.getElementById('content-container');
+        let isMusicPlaying = false;
+        let ytPlayer; // Variabel untuk menyimpan pemutar video YouTube
+
+        // Fungsi yang dipanggil API YouTube saat siap
+        function onYouTubeIframeAPIReady() {
+            // Fungsi ini sengaja dikosongkan, kita akan membuat player saat halaman kenangan.html dimuat
+        }
+
+        // Fungsi untuk membuat pemutar video
+        function createYouTubePlayer() {
+            // **GANTI DENGAN ID VIDEO YOUTUBE ANDA**
+            const videoId = 'L84SoAVs1Dw';  // Contoh ID video YouTube 
+            
+            if (document.getElementById('youtube-player')) {
+                ytPlayer = new YT.Player('youtube-player', {
+                    height: '100%',
+                    width: '100%',
+                    videoId: videoId,
+                    playerVars: { 'playsinline': 1 },
+                    events: { 'onStateChange': onPlayerStateChange }
+                });
+            }
+        }
+
+        // Fungsi yang mengontrol musik berdasarkan status video
+        function onPlayerStateChange(event) {
+            // Jika video diputar (PLAYING)
+            if (event.data == YT.PlayerState.PLAYING && isMusicPlaying) {
+                audio.pause();
+            }
+            // Jika video selesai (ENDED) atau dijeda (PAUSED)
+            else if (event.data == YT.PlayerState.ENDED || event.data == YT.PlayerState.PAUSED) {
+                if (isMusicPlaying) {
+                    audio.play();
+                }
+            }
+        }
+
+        // Fungsi untuk memuat halaman
+        async function loadPage(url, pushState = true) {
+            // Hancurkan pemutar video lama jika ada, dan putar musik kembali
+            if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+                ytPlayer.destroy();
+                ytPlayer = null;
+                if(isMusicPlaying) audio.play();
+            }
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`Halaman tidak ditemukan: ${url}`);
+                
+                const pageContent = await response.text();
+                contentContainer.innerHTML = pageContent;
+
+                const pageName = url.split('.')[0];
+                document.body.className = `${pageName}-page`;
+
+                if (pushState) {
+                    history.pushState({ page: url }, ``, `?page=${pageName}`);
+                }
+
+                // Jika halaman yang dimuat adalah kenangan.html, buat pemutar videonya
+                if (pageName === 'kenangan') {
+                    if (typeof YT !== 'undefined' && YT.Player) {
+                        createYouTubePlayer();
+                    } else {
+                        // Jika API belum siap, panggil kembali setelah sedikit jeda
+                        window.onYouTubeIframeAPIReady = createYouTubePlayer;
+                    }
+                }
+                
+                if (typeof initializePageScripts === 'function') {
+                    initializePageScripts();
+                }
+                
+            } catch (error) {
+                contentContainer.innerHTML = `<p style="text-align:center;">Gagal memuat halaman.</p>`;
+                console.error('Error memuat halaman:', error);
+            }
+        }
+        
+        // Event listener untuk tombol kembali browser
+        window.addEventListener('popstate', function(event) {
+            const pageToLoad = (event.state && event.state.page) ? event.state.page : 'sapaan.html';
+            loadPage(pageToLoad, false);
+        });
+
+        // Event listener untuk klik di dalam konten
+        contentContainer.addEventListener('click', function(event) {
+            const targetLink = event.target.closest('a');
+            if (!targetLink) return;
+
+            const href = targetLink.getAttribute('href');
+            if (href && href !== '#') {
+                event.preventDefault();
+
+                if (targetLink.id === 'startButton' && !isMusicPlaying) {
+                    audio.play().catch(e => console.error("Gagal memutar musik:", e));
+                    isMusicPlaying = true;
+                }
+                
+                loadPage(href);
+            }
+        });
+
+        // Logika saat halaman pertama kali dibuka
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const initialPage = params.get('page') ? params.get('page') + '.html' : 'sapaan.html';
+            loadPage(initialPage);
+        });
+    </script>
+</body>
+</html>

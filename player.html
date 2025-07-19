@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Music Player</title>
+</head>
+<body>
+  <audio id="music" src="Party.mp3" autoplay loop muted></audio>
+  
+  <script>
+    const audio = document.getElementById('music');
+  
+    // Fungsi ini akan dipanggil dari halaman lain untuk menyalakan musik
+    function playMusicWithSound() {
+      // Hanya coba mainkan jika sedang tidak bersuara
+      if (audio.muted) {
+        audio.muted = false;
+        audio.play().catch(e => console.error("Gagal memutar musik dengan suara:", e));
+      }
+    }
+  </script>
+</body>
+</html>

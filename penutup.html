@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terima Kasih, Sayangku Farisa ❤️</title>
+    <base target="_parent">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Tambahan Khusus untuk penutup.html */
+        body.ending-page {
+            background-color: #fef1f8; /* Pink sangat muda */
+            /* Hapus atau ubah properti di bawah ini */
+            /* display: flex; */ /* Ini bisa menghambat scrolling jika kontennya besar */
+            /* flex-direction: column; */
+            /* justify-content: center; */
+            /* align-items: center; */
+            min-height: 100vh; /* Tetap pertahankan agar minimal setinggi viewport */
+            text-align: center;
+            position: relative;
+            /* overflow: hidden; */ /* Hapus ini agar scrolling diizinkan */
+            /* Kita akan mengelola overflow secara global di style.css */
+        }
+
+        /* Tambahkan ini ke style.css utama jika belum ada */
+        html {
+            overflow-y: scroll; /* Pastikan scrolling vertikal diizinkan di seluruh dokumen */
+        }
+        body {
+            overflow-x: hidden; /* Tetap sembunyikan overflow horizontal */
+        }
+
+
+        .ending-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 3em 2.5em;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            width: 90%;
+            margin: 2em auto; /* Margin atas/bawah agar ada sedikit ruang */
+            z-index: 2; /* Di atas animasi latar belakang */
+            animation: fadeInScale 1.5s ease-out; /* Animasi muncul */
+        }
+
+        .ending-container h1 {
+            font-family: 'Dancing Script', cursive; /* Font khusus untuk kesan romantis */
+            color: #e91e63;
+            font-size: 3.5em; /* Ukuran font untuk layar besar */
+            margin-bottom: 0.8em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .ending-message {
+            font-size: 1.3em; /* Ukuran font untuk layar besar */
+            color: #4a4a4a;
+            margin-bottom: 1.5em;
+            line-height: 1.8;
+            white-space: pre-line; /* Untuk menjaga format baris baru di teks */
+        }
+
+        .ending-image {
+            max-width: 250px;
+            width: 70%; /* Responsif */
+            border-radius: 50%; /* Jika ingin lingkaran */
+            object-fit: cover;
+            border: 5px solid #ff6f91;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 2em;
+        }
+
+        .closing-signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em;
+            color: #d81b60;
+            margin-top: 1.5em;
+            font-weight: bold;
+        }
+
+        /* Animasi Hati Latar Belakang */
+        .heart-fall-animation-area {
+            position: fixed; /* Tetap fixed agar selalu terlihat di latar belakang */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden; /* Pertahankan ini untuk membatasi hati dalam viewport */
+            z-index: 1; /* Di bawah ending-container */
+        }
+
+        .animated-heart-fall {
+            position: absolute;
+            font-size: 2.2em; /* Ukuran hati */
+            color: rgba(255, 105, 180, 0.7); /* Pink transparan */
+            animation: fallHeartEnding linear infinite;
+            transform: translateY(-100px);
+        }
+
+        @keyframes fallHeartEnding {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Media Queries untuk halaman penutup */
+        @media (max-width: 768px) {
+            .ending-container {
+                padding: 2em 1.5em;
+            }
+            .ending-container h1 {
+                font-size: 2.5em;
+            }
+            .ending-message {
+                font-size: 1.1em;
+            }
+            .ending-image {
+                max-width: 200px;
+            }
+            .closing-signature {
+                font-size: 1.6em;
+            }
+            .animated-heart-fall {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ending-container {
+                padding: 1.5em 1em;
+            }
+            .ending-container h1 {
+                font-size: 2em;
+            }
+            .ending-message {
+                font-size: 1em;
+            }
+            .ending-image {
+                max-width: 150px;
+            }
+            .closing-signature {
+                font-size: 1.4em;
+            }
+            .animated-heart-fall {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body class="ending-page">
+    <div class="heart-fall-animation-area"></div>
+    
+    <div class="ending-container">
+        <a href="webfaris.html" class="back-arrow" title="Kembali ke Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+        <h1>Terakhir Banget</h1>
+        
+        <img src="foto_farisa_akhir.jpg" alt="Farisa Azzahra" class="ending-image"> 
+
+        <p class="ending-message">
+            Sayangku, Farisa,
+            Aku berterimakasih sekali sama kamu karena telah menjadi sosok penting dalam hidup aku. aku sayang banget sama kamu dan pasti kamu udaah tau wkwkwk.
+
+            aku bikin ini sengaja buat ngerayain ulang tahun kamu. semoga kamu suka sama hadiah dari aku ini heheh.
+        </p>
+
+        <p class="closing-signature">I Love You, <br>Zahran</p>
+    </div>
+        <script src="script.js"></script>
+
+        <!-- <iframe src="player.html" style="width:0;height:0;border:0;visibility:hidden;" allow="autoplay"></iframe> -->
+
+    </body>
+    </html>
